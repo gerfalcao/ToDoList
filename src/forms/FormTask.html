@@ -1,0 +1,10 @@
+<form method="POST" action="/src/addTask.php" enctype="multipart/form-data">
+
+  <input type="text" class="formTitle" id="title" name="title" placeholder="Tarefa" required/>
+  <br><br>
+  <textarea class="formDescription" id="description" name="description" placeholder="Descrição"></textarea>
+  <br><br>
+  <input type="file" id="fileInput" title="Subir Arquivo" name="file" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" onchange="checkFileSize(this)">
+  <button type="submit">Adicionar</button>
+  <button type="button" onclick="toggleForm()">Cancelar</button>
+</form>

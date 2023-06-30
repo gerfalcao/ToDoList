@@ -6,7 +6,7 @@ require_once '../repository/TaskRepository.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $taskId = $_POST['task_id'];
   $field = $_POST['field'];
-  $value = $_POST['value'];
+  $value = array_key_exists('value', $_POST) ? $_POST['value'] : null;
   $file = $_FILES['file'];
 
   $task = getTaskById($taskId);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $safeName = $hash . '_' . $fileName;
           echo $safeName;
           
-          move_uploaded_file($fileInfo['tmp_name'], './files-uploaded/' . $safeName);
+          move_uploaded_file($fileInfo['tmp_name'], '../files-uploaded/' . $safeName);
           $task->setFile($safeName);
         } else {
           $task->setFile('null');

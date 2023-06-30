@@ -1,6 +1,7 @@
 <?php
-require_once '../db.php';
-require_once './entity/task.php';
+require_once '../../config/db.php';
+require_once '../model/Task.php';
+require_once '../repository/TaskRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $taskId = $_POST['task_id'];
@@ -8,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $value = $_POST['value'];
   $file = $_FILES['file'];
 
-  $task = Task::getTaskById($taskId);
+  $task = getTaskById($taskId);
   if ($task) {
     switch ($field) {
       case 'title':
@@ -43,24 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'Campo inválido';
         exit;
     }
-    $task->persistTask();
+    persistTask($task);
     echo 'OK';
   } else {
     echo 'Tarefa não encontrada';
   }
   
-  // $taskId = $_POST['task_id'];
-  // $concluida = $_POST['concluida'] === '1';
-
-  // $stmt = $pdo->prepare("UPDATE tasks SET concluida = :concluida WHERE id = :id");
-  // $stmt->bindValue(':concluida', $concluida, PDO::PARAM_BOOL);
-  // $stmt->bindValue(':id', $taskId, PDO::PARAM_INT);
-  // $stmt->execute();
-
-  // if ($stmt->rowCount() === 1) {
-  //   echo 'OK';
-  // } else {
-  //   echo 'Erro ao atualizar o status de conclusão da tarefa!';
-  // }
 }
 ?>

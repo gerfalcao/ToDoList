@@ -1,6 +1,6 @@
 <?php 
 
-require_once '../../src/entity/task.php';
+require_once '../../../src/model/Task.php';
 
 $task = Task::getTaskById($_GET['id']);
 
@@ -19,7 +19,7 @@ echo '
       
     </div>
     <div class="file-display" id="fileDisplay' . $task->getId() . '">';
-    if ($task->getFile() !== 'null' && $task->getFile() !== '' && $task->getFile() !== '0') {
+    if ($task->getFile() !== 'null' && $task->getFile() !== '' && $task->getFile() !== '0' && $task->getFile() !== null) {
       $fileUrl = '../../src/files-uploaded/' . $task->getFile();
       echo "<a href='{$fileUrl}' target='_blank' id='fileView'>Arquivo: {$task->getFile()}</a>";
     };

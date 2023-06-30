@@ -8,7 +8,7 @@ function openTask(taskId) {
     openTaskDiv.classList.remove('open');
   }
   });
-    fetch('/public/components/view-task.php?id=' + taskId)
+    fetch('/src/view/components/view-task.php?id=' + taskId)
       .then(response => response.text())
       .then(data => {
         document.getElementById('open-task').innerHTML = data;
@@ -18,7 +18,11 @@ function openTask(taskId) {
   }
 
   function deleteTask(taskId) {
-    fetch('/src/deleteTask.php', {
+    let allow = confirm('Tem certeza que deseja excluir essa tarefa?');
+    if (!allow) {
+      return
+    }
+    fetch('/src/service/deleteTask.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -49,8 +53,8 @@ function closeTask () {
 let formOpen = false;
 
 function toggleForm() {
-  let addTaskInput = document.getElementById('addTask');
-  let formContainer = document.getElementById('formContainer');
+  const addTaskInput = document.getElementById('addTask');
+  const formContainer = document.getElementById('formContainer');
   if (!formOpen) {
     fetch('/src/forms/FormTask.html')
       .then(response => response.text())
@@ -84,7 +88,7 @@ function updateTask(taskId, field, value) {
     value = value.replace(/\n/g, '<br>');
   }
   let xhr = new XMLHttpRequest();
-  xhr.open('POST', '/src/updateTask.php');
+  xhr.open('POST', '/src/service/updateTask.php');
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
   xhr.onload = function() {
     if (xhr.status === 200 && xhr.responseText === 'OK') {
@@ -104,7 +108,7 @@ function updateFile(taskId, file) {
   formData.append('file', file);
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', '/src/updateTask.php');
+  xhr.open('POST', '/src/service/updateTask.php');
   xhr.onload = function() {
     if (xhr.status === 200 ) {
       const safeName = xhr.responseText.replace('OK', '');
@@ -132,8 +136,8 @@ function updateFile(taskId, file) {
 
 function editTask(taskId) {
   
-  let titleDisplay = document.getElementById('title');
-  let titleElem = document.getElementById('titleView' + taskId);
+  const titleDisplay = document.getElementById('title');
+  const titleElem = document.getElementById('titleView' + taskId);
   let title = titleElem.innerText;  
 
   let descriptionDisplay = document.getElementById('description');
@@ -206,12 +210,14 @@ function editTask(taskId) {
     descriptionDisplay.replaceChild(descriptionElem, inputDescription);
     editButton.style.display = 'block'; 
 
-    buttonDisplay.removeChild(finishButton);
-    fileDisplay.removeChild(createFile);
-    fileDisplay.removeChild(deleteFile);
-   
+    finishButton.remove();
+    createFile.remove();
+    deleteFile.remove();
+
     document.getElementById('descriptionView' + taskId).innerText = inputDescription.value;
+    console.log
     document.getElementById('titleView' + taskId).innerText = inputTitle.value;
+    
     document.getElementById('descriptionMain' + taskId).innerText = inputDescription.value.replace(/\n/g, ' ').replace('<br>', ' ').substring(0, 20) + '...';
     document.getElementById('titleMain' + taskId).innerText = inputTitle.value;
 

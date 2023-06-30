@@ -1,10 +1,11 @@
 <?php
 
-require_once './entity/task.php';
+require_once '../model/Task.php';
+require_once '../repository/TaskRepository.php';
 
 $taskId = $_POST['task_id'];
 
-$success = Task::deleteTask($taskId);
+$success = deleteTask($taskId);
 
 if ($success) {
   echo 'OK';

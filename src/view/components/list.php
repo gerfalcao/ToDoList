@@ -1,11 +1,11 @@
 <?php
 
-require_once 'src/entity/task.php';
+require_once 'src/repository/TaskRepository.php';
 
 echo '
   <div class="list">  
   <h2>Lista de tarefas</h2>';
-  $tasks = Task::getAllTasks();
+  $tasks = getAllTasks();
  
   foreach ($tasks as $task) {
     echo '

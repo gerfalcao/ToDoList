@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../db.php';
+require_once __DIR__ . '/../../config/db.php';
 
 class Task {
   private ?int $id;
@@ -17,7 +17,7 @@ class Task {
     $this->file = $file;
   }
 
-  public function getId (): int {
+  public function getId (): ?int {
     return $this->id;
   }
 
@@ -25,7 +25,7 @@ class Task {
     $this->id = $id;
   }
 
-  public function getTitle (): string {
+  public function getTitle (): ?string {
     return $this->title;
   }
 
@@ -33,7 +33,7 @@ class Task {
     $this->title = $title;
   }
 
-  public function getDescription (): string {
+  public function getDescription (): ?string {
     return $this->description;
   }
 
